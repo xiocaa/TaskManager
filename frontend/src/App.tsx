@@ -35,13 +35,11 @@ export default function App(){
         if(idx<0) return;
         const before = tasks[idx];
         const next: Task = { ...before, ...partial };
-        // 乐观更新
         setTasks(tasks.map(t=>t.id===next.id? next : t));
         try{
             const res = await api.put<Task>(`/tasks/${next.id}`, next);
             setTasks(tasks.map(t=>t.id===next.id? res.data : t));
         }catch(e){
-            // 回滚
             setTasks(tasks.map(t=>t.id===before.id? before : t));
             alert("Update failed");
         }
@@ -63,7 +61,6 @@ export default function App(){
             <h1>Task Manager</h1>
             <CreateUser
                 onCreated={(u) => {
-                    // 把新用户加入列表并自动切换到该用户
                     setUsers((prev) => [u, ...prev]);
                     changeUser(u.id);
                 }}

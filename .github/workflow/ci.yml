@@ -1,0 +1,47 @@
+name: CI
+on:
+  push: { branches: ["**"] }
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Backend build & test
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Backend Build
+        working-directory: backend
+        run: mvn -B -DskipTests=false test package
+
+      # Frontend build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Frontend Build
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      # Docker build
+      - name: Docker Build
+        run: |
+          docker build -t app-backend ./backend
+          docker build -t app-frontend ./frontend
+          docker build -t app-proxy ./proxy
+
+      # Compose up and smoke test
+      - name: Compose Up
+        run: docker compose up -d --build
+      - name: Health Check
+        run: |
+          sleep 10
+          curl -fsS http://localhost:8080/api/health
+      - name: Compose Down
+        if: always()
+        run: docker compose down -v

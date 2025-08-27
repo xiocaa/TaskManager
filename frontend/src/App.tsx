@@ -1,3 +1,4 @@
+import CreateUser from "./components/CreateUser";
 import { useEffect, useState } from "react";
 import { api, setUser } from "./api";
 import type { Task, User } from "./types";
@@ -60,7 +61,13 @@ export default function App(){
     return (
         <div style={{maxWidth:900, margin:"40px auto", fontFamily:"Inter,system-ui"}}>
             <h1>Task Manager</h1>
-
+            <CreateUser
+                onCreated={(u) => {
+                    // 把新用户加入列表并自动切换到该用户
+                    setUsers((prev) => [u, ...prev]);
+                    changeUser(u.id);
+                }}
+            />
             <div style={{marginBottom:16}}>
                 <label>User:&nbsp;</label>
                 <select value={userId} onChange={e=>changeUser(Number(e.target.value))}>

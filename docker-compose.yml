@@ -14,7 +14,7 @@ services:
 
   backend:
     build: ./backend
-    image: mp3-fullstack-backend:local   # 本地构建并打标签
+    image: mp3-fullstack-backend:local
     environment:
       DB_HOST: db
       DB_PORT: 5432
@@ -27,14 +27,13 @@ services:
 
   frontend:
     build: ./frontend
-    image: mp3-fullstack-frontend:local  # 本地构建并打标签
+    image: mp3-fullstack-frontend:local
 
   proxy:
     build: ./proxy
-    image: mp3-fullstack-proxy:local     # 本地构建并打标签
+    image: mp3-fullstack-proxy:local
     ports:
       - "8080:80"
     depends_on:
       - backend
       - frontend
-

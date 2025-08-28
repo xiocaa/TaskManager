@@ -2,7 +2,7 @@
 
 A minimal fullstack web application built with:
 
-- **Frontend**: React + Vite + TypeScript
+- **Frontend**: React + Vite + Shadcn + tailwindcss + TypeScript
 - **Backend**: Java Spring Boot 
 - **Database**: PostgreSQL
 - **Proxy**: Nginx 
@@ -15,7 +15,7 @@ Each request specifies the acting user with a header `X-User-Id`, simulating aut
 
 - User management (create/list users)
 - Task CRUD (title, description, status, due date)
-- Frontend UI for task list with **inline edit**, **status select**, and **delete**
+- Frontend UI for task list with **inline edit**, **status select**, **delete**, **search** 
 - Multi-user isolation (user can only access their own tasks)
 - Pre-seeded demo data (Alice, Bob with sample tasks) in non-test environments
 - GitHub Actions CI: build + test + Docker workflow

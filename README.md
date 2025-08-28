@@ -34,7 +34,7 @@ cd TaskManager
 # build and start all services
 docker compose up -d --build
 
-```
+``` 
 ## Visit
 - Frontend: http://localhost:8080
 - Health Check: http://localhost:8080/api/health

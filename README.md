@@ -28,8 +28,8 @@ Each request specifies the acting user with a header `X-User-Id`, simulating aut
 
 ### Clone and Run
 ```bash
-git clone https://github.com/<your-username>/mp3-fullstack.git
-cd mp3-fullstack
+git clone https://github.com/xiocaa/TaskManager.git
+cd TaskManager
 
 # build and start all services
 docker compose up -d --build

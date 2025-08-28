@@ -26,23 +26,18 @@ export default function App() {
 
     useEffect(() => {
         async function boot() {
-            loadUserFromStorage()
-            const uid = localStorage.getItem("userId")
-            if (!uid) {
-                const name = window.prompt("Enter username (e.g. alice)") || ""
-                const username = name.trim() || "demo"
-                const users = (await api.get<Array<{id:number; username:string}>>("/users")).data
-                let user = users.find(u => u.username.toLowerCase() === username.toLowerCase())
-                if (!user) {
-                    user = (await api.post<{id:number; username:string}>("/users", { username })).data
-                }
-                setUser(user.id)
-                localStorage.setItem("fake_auth_user", JSON.stringify(user))
-                setUserName(user.username)
-            } else {
-                const stored = localStorage.getItem("fake_auth_user")
-                if (stored) setUserName(JSON.parse(stored).username)
+            const name = window.prompt("Enter username (e.g. alice)") || ""
+            const username = name.trim() || "demo"
+
+            const users = (await api.get<Array<{id:number; username:string}>>("/users")).data
+            let user = users.find(u => u.username.toLowerCase() === username.toLowerCase())
+            if (!user) {
+                user = (await api.post<{id:number; username:string}>("/users", { username })).data
             }
+
+            setUser(user.id)
+            setUserName(user.username)
+
             const res = await api.get<Task[]>("/tasks")
             setTasks(res.data.map(t => ({ ...t, category: "General" })))
         }
